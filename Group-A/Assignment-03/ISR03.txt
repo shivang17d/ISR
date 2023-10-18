@@ -1,0 +1,232 @@
+Name : Shivang Gupta
+Roll No : 3055
+Class : BE-IT
+Course : Information Storage Retrieval
+Assignment No : 03
+
+Problem Statement : To implement a program for retrieval of document using inverted files.
+
+-------------------------------------------------------Program------------------------------------------------------------------------
+
+import java.io.BufferedReader;
+import java.util.*;  
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+
+
+public class Document_Retrieval 
+{
+	
+	public static void main(String args[])  
+	{  
+		try  
+		{  
+			File file=new File("Y:\\02) Study Academics\\05) BE (SEM-7)\\ISR\\Assignment_03\\Final\\input.txt");   
+			FileReader fr=new FileReader(file);    
+			BufferedReader br=new BufferedReader(fr); 
+			StringBuffer sb=new StringBuffer();    
+			String line;  
+			while((line=br.readLine())!=null)  
+			{  
+				sb.append(line);      
+				sb.append("\n");  
+			}  
+			fr.close();   
+			
+			String sentence = sb.toString();
+			sentence = sentence.toLowerCase();
+			String[] senten= sentence.split(" ");
+			
+			
+			int col=0;
+			int[] doc_r = new int[7];
+			File filee=new File("Y:\\02) Study Academics\\05) BE (SEM-7)\\ISR\\Assignment_03\\Final\\representative.txt");   
+			Scanner sc = new Scanner(filee); 
+			String str1 = "";
+			
+			String[] arr_str = new String[20];
+			
+			int c=0;
+
+			
+			String[] keyword = new String[7];
+			
+			while(sc.hasNextLine()) 
+			{
+				arr_str = sc.nextLine().split("  ");
+				for(String a:arr_str) 
+				{
+					if(c%2==0) 
+					{
+						keyword[c/2]=a.strip();
+					}
+					
+					c++;
+				}
+			}
+		
+		
+			
+			int[][] Key_count =new int[7][7]; 
+			int[] ct = new int[]{0,0,0,0,0,0,0};
+			for(int i=0;i<senten.length;i++) 
+			{
+				for(int j=0;j<keyword.length;j++) 
+				{
+					if(stringCompare(senten[i],keyword[j])==1) 
+					{
+						int n = ct[j];
+						Key_count[j][n]=i+1;
+						ct[j]++;
+					}
+				}
+			
+			}
+		
+		
+			System.out.println("\n\n\n");
+			System.out.println("\t\t\t***-- Keyword with their respective positions in document --***\n\n\n");
+			for(int i=0;i<Key_count.length;i++) 
+			{
+				int k=0;
+				System.out.print(keyword[i] + " : ");
+				for(int j=0;j<Key_count[i].length;j++) 
+				{
+					if(Key_count[i][j]!=0) 
+					{
+						
+						System.out.print(Key_count[i][j]+"\t");
+						k++;
+					}
+					
+				}
+				System.out.print("\t\t\t\t----->Total Keywords in document : " + k);
+				System.out.println("\n");
+			}
+			
+			
+			System.out.println("\n--------------------------------------------------------------------------------");
+			
+			
+			Scanner scc= new Scanner(System.in); 
+			System.out.print("\n\t\t\t**Enter a string to search : ");  
+			String str= scc.nextLine();             
+			
+			
+			int flag = 0;
+			for(int i=0;i<keyword.length;i++) 
+			{
+				if(stringCompare(str.strip(),keyword[i])==1) 
+				{
+					flag = 1;
+					break;
+				}
+			}
+			
+			if(flag==1) 
+			{
+				System.out.print("\n");
+				System.out.print(str + "  found at position : ");
+				for(int i=0;i<senten.length;i++) 
+				{
+						if(stringCompare(senten[i],str)==1) 
+						{
+							int k= i+1;
+							System.out.print(k+"\t");
+						}	
+				}
+			}
+			else 
+			{
+				System.out.println("This is not a keyword");
+			}
+			System.out.println("\n--------------------------------------------------------------------------------\n");
+		
+		}  
+		catch(IOException e)  
+		{  
+			e.printStackTrace();  
+		}  
+	}  
+	public static int stringCompare(String str1, String str2)
+    {
+  
+        int l1 = str1.length();
+        int l2 = str2.length();
+        int lmin = Math.min(l1, l2);
+        
+        int flag = 1;
+  
+        if (l1 != l2) 
+		{
+            return 0;
+        }
+        
+        for (int i = 0; i < lmin; i++) 
+		{
+            int str1_ch = (int)str1.charAt(i);
+            int str2_ch = (int)str2.charAt(i);
+  
+            if (str1_ch != str2_ch) 
+			{
+                return 0;
+            }
+        }
+
+        return 1;
+    }
+}
+
+----------------------------------------------------INPUT--------------------------------------------------------------------------------
+01) input.txt
+	Sometimes called Remote Wake-up, Wake on LAN is technology that allows someone to turn on a network computer remotely by sending a special data packet. Even if the computer is turn off, the network adapter is still listening on the network, so when the special packet arrives, the network adapter can turn on the computer progress.
+
+02) representative.txt
+	network  3
+	turn  3
+	computer  3
+	wake  1
+	adapter  2
+	packet  2
+	special  2
+
+
+
+
+----------------------------------------------------OUTPUT--------------------------------------------------------------------------------
+
+Y:\02) Study Academics\05) BE (SEM-7)\ISR\Assignment_03>javac Document_Retrieval.java
+
+Y:\02) Study Academics\05) BE (SEM-7)\ISR\Assignment_03>java Document_Retrieval
+
+
+
+
+                        ***-- Keyword with their respective positions in document --***
+
+
+
+network : 17    34      49                                      ----->Total Keywords in document : 3
+
+turn : 14       31      52                                      ----->Total Keywords in document : 3
+
+computer : 18   29      55                                      ----->Total Keywords in document : 3
+
+wake : 5                                        ----->Total Keywords in document : 1
+
+adapter : 35    50                                      ----->Total Keywords in document : 2
+
+packet : 46                                     ----->Total Keywords in document : 1
+
+special : 23    45                                      ----->Total Keywords in document : 2
+
+
+--------------------------------------------------------------------------------
+
+                        **Enter a string to search : computer
+
+computer  found at position : 18        29      55
+--------------------------------------------------------------------------------

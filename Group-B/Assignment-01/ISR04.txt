@@ -1,0 +1,104 @@
+Name : Shivang Gupta
+Roll No : 3055
+Class : BE-IT
+Course : Information Storage Retrieval
+Assignment No : 04
+
+Problem Statement : 
+	Implement a program to calculate precision and recall for sample input. (Answer set A, Query q1, Relevant documents to query q1- Rq1 )
+
+
+-------------------------------------------------------Program------------------------------------------------------------------------
+
+import java.util.*;
+import java.io.*;
+import java.util.Scanner;
+import java.lang.Math;
+
+public class F_E_Measure
+{
+    public static void main(String args[])
+    {
+        String relevant_docs [] = {"d3", "d5", "d9", "d25", "d39", "d44", "d56", "d71", "d89", "d123"};    
+        int relevant_size  = relevant_docs.length;
+        String answer_set [] = {"d123", "d84", "d56", "d6", "d8", "d9", "d511", "d129", "d187", "d25", "d38", "d48", "d250", "d113", "d3"};   
+        int answerset_size = answer_set.length;
+        double precision=0, recall=0;
+        double Ra=0;
+        String retrieved_string="";
+       
+
+        System.out.println("\n\n");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("\t\t   Documents\t\t\t\t\t      ||Ra|   |A|    |Precision|    |Recall|");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
+        
+        
+        for(int i = 0; i <  answerset_size; ++i)
+        {
+            for(int j = 0; j < relevant_size; ++j)
+            {
+                if(answer_set[i] == relevant_docs[j])
+                {
+                    Ra++;
+                }
+            }
+            
+            precision = Ra / (i + 1);
+            recall = Ra / relevant_size;
+
+            retrieved_string = retrieved_string + " " +answer_set[i];
+            
+            System.out.print(retrieved_string);
+            
+            for(int k = 1; k <= 70 - retrieved_string.length(); ++k)
+            {
+                System.out.print(" ");
+            }
+            System.out.print("| "+Ra+"    ");
+            System.out.print((i+1)+"      ");
+
+
+
+            System.out.print(String.format("%.2f",precision * 100)+"%        ");
+            System.out.print(recall * 100+"%");
+            System.out.println("");
+
+            
+            
+        }
+        
+        System.out.println("\n\n--------------------------------------------------------------------------------------------------------------------------\n\n");
+
+    }
+}
+
+
+
+
+
+----------------------------------------------------OUTPUT--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------
+                   Documents                                          ||Ra|   |A|    |Precision|    |Recall|
+--------------------------------------------------------------------------------------------------------------------------
+ d123                                                                 | 1.0    1      100.00%        10.0%
+ d123 d84                                                             | 1.0    2      50.00%        10.0%
+ d123 d84 d56                                                         | 2.0    3      66.67%        20.0%
+ d123 d84 d56 d6                                                      | 2.0    4      50.00%        20.0%
+ d123 d84 d56 d6 d8                                                   | 2.0    5      40.00%        20.0%
+ d123 d84 d56 d6 d8 d9                                                | 3.0    6      50.00%        30.0%
+ d123 d84 d56 d6 d8 d9 d511                                           | 3.0    7      42.86%        30.0%
+ d123 d84 d56 d6 d8 d9 d511 d129                                      | 3.0    8      37.50%        30.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187                                 | 3.0    9      33.33%        30.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25                             | 4.0    10      40.00%        40.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38                         | 4.0    11      36.36%        40.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38 d48                     | 4.0    12      33.33%        40.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38 d48 d250                | 4.0    13      30.77%        40.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38 d48 d250 d113           | 4.0    14      28.57%        40.0%
+ d123 d84 d56 d6 d8 d9 d511 d129 d187 d25 d38 d48 d250 d113 d3        | 5.0    15      33.33%        50.0%
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+

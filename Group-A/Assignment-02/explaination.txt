@@ -1,0 +1,39 @@
+This Java code implements a clustering algorithm known as the Single-Pass algorithm for grouping documents based on their content. The code allows for two clustering modes: "Cluster overlapping" and "Cluster disjoint," and it uses a similarity measure to determine whether a document belongs to an existing cluster or if a new cluster should be created. Here's a step-by-step explanation of the code:
+
+1. `Document` Class:
+   - Represents a document and stores its name and a map of tokens (words) with their frequencies. The `Document` class reads the content of a text file, tokenizes it, and counts the frequency of each word.
+
+2. `Cluster` Class:
+   - Represents a cluster of documents. Each cluster has a name, a centroid (a map of tokens and their weights), and a list of documents that belong to the cluster.
+   - The `updateClusterCentroid` method is used to update the cluster's centroid by considering a new document's centroid and adjusting the weights accordingly.
+
+3. `Single_Pass` Class:
+   - This is the main class that contains the `main` method, where the program execution starts.
+
+4. `clusterList` and `threshold`:
+   - `clusterList` is a list to store the clusters formed during the clustering process.
+   - `threshold` is a user-defined parameter that determines the minimum similarity required for a document to be added to an existing cluster.
+
+5. The `main` method:
+   - It takes user input to choose between two clustering modes: "Cluster overlapping" and "Cluster disjoint."
+   - Depending on the selected option, it calls either the `overlapping` or `disjoint` method.
+
+6. `overlapping` and `disjoint` Methods:
+   - These methods demonstrate the two clustering modes by creating and adding documents to clusters. The `addDocumentToCluster` method is used to determine if a document should be added to an existing cluster or a new cluster should be created.
+
+7. `createNewCluster` Method:
+   - Allows the user to create a new cluster by specifying a cluster name.
+
+8. `addDocumentToCluster` Method:
+   - Determines whether a document should be added to an existing cluster or a new cluster should be created based on similarity measures.
+   - It computes the similarity between the document and each existing cluster's centroid using the `getSimilarity` method.
+   - In the "overlapping" mode, documents with a similarity greater than or equal to the threshold are added to the cluster, and the cluster's centroid is updated.
+   - In the "disjoint" mode, the document is added to the cluster with the highest similarity if the similarity is greater than or equal to the threshold. Otherwise, a new cluster is created.
+
+9. `getSimilarity` Method:
+   - Calculates the similarity between a cluster's centroid and a document's centroid by summing the products of the weights of common tokens.
+
+10. `printClusters` Method:
+    - Displays the clusters formed and the documents belonging to each cluster.
+
+Overall, this code demonstrates a simple implementation of the Single-Pass clustering algorithm with overlapping or disjoint cluster modes. It reads documents, computes their centroids, and assigns them to clusters based on similarity measures. The program then displays the resulting clusters.

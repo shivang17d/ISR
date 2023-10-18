@@ -1,0 +1,8 @@
+network  4
+turn  2
+computer  3
+wake  2
+adapter  2
+packet  2
+special  2
+still  1
